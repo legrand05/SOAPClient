@@ -1,4 +1,4 @@
-package ind.legrand.mondesir.SOAPClient;
+package SOAPClient;
 
 
 import java.util.ArrayList;
@@ -45,8 +45,10 @@ public class SOAPBuilder {
 	}
 
 	/**
+	 * 
 	 * Add a root element along with child elements and there values.
 	 * 
+	 * <pre>
 	 * Example:
 		  addObject("UpdatePaymentStatusRequest", "mes", 
 		 				"NewStatus", "APPROVED",
@@ -54,19 +56,21 @@ public class SOAPBuilder {
 		 
 		 Generates the following xml string:
 		 
-		 <mes:UpdatePaymentStatusRequest> 
-			<mes:NewStatus>APPROVED</mes:NewStatus>
-			<mes:PaymentIdentifier>12345</mes:PaymentIdentifier>
-		 </mes:UpdatePaymentStatusRequest> 
+		 
+		 &lt;mes:UpdatePaymentStatusRequest> 
+			&lt;mes:NewStatus>APPROVED&lt;/mes:NewStatus>
+			&lt;mes:PaymentIdentifier>12345&lt;/mes:PaymentIdentifier>
+		 &lt;/mes:UpdatePaymentStatusRequest> 
+		</pre>
 	 *
-	 * @param objectName - root element's name
+	 * @param objectName root element's name
 	 * @param nameSpace
-	 * @param argValues - an even numbered String array of 
+	 * @param argValues an even numbered String array of 
 	 * @return
 	 * @throws Exception 
 	 */
 	public SOAPBuilder addObject(final String objectName, final String nameSpace, String... argValues) throws Exception {
-		final String localNSURL = localNameSpaces.remove(nameSpace);
+		final String  localNSURL = localNameSpaces.remove(nameSpace);
 		SOAPElement object;
 		if (localNSURL!=null) {
 			object = element.addChildElement(objectName, nameSpace, localNSURL);
@@ -90,7 +94,7 @@ public class SOAPBuilder {
 	 * 
 	 * Adds child elements and there values referenced by current root element.
 	 * 
-	 * @param attributes - child elements and values to be added
+	 * @param attributes child elements and values to be added
 	 * @return current SOAPBuilder (added child elements parent)
 	 * 
 	 * @throws SOAPException
@@ -117,19 +121,20 @@ public class SOAPBuilder {
 	
 	/**
 	 * Add xml attributes to element referenced by current SOAPBuilder
-	 * 
+	 * <pre>
 	 * Example:
 	 * 
-		  Current xml element is <password><password>
+		  Current xml element is: &lt;password>&lt;password>
 		  
 		  After calling this method:
 			  addAttribute(
 			    "Type", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText", 
-				"Id",    "UsernameToken-3)
+				"Id",    "UsernameToken-3")
 				
 		 Generates the following xml string:
-		  	 <password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText, Id="UsernameToken-3"><password>
-	 
+		 	
+		  	 &lt;password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText, Id="UsernameToken-3"><password>
+	 		</pre>
 	 * @param attributes attributes to add to current xml element referenced by this SOAPBuilder
 	 * 
 	 * @return current SOAPBuilder
@@ -151,7 +156,7 @@ public class SOAPBuilder {
 	/**
 	 * Set current node value referenced by current SOAPBuilder to incoming value.
 	 * 
-	 * @param value - value to set current 
+	 * @param value value to set current 
 	 * @return current SOAPBuilder
 	 * @throws SOAPException
 	 */
@@ -266,21 +271,22 @@ public class SOAPBuilder {
 	
 	/**
 	 * Return xml element value.
-	 * 
+	 * <pre>
 	 * Example:
-	 *    SOAPBuilder builds this xml structure
-	 *    <Security>
-			<UsernameToken>
-				<Username>leGrand</UserName>
-			</UsernameToken>
-			
-	      </Security>
+	 *    If SOAPBuilder builds this xml structure:
+	 *    
+	 *    &lt;Security>
+	 *	&lt;UsernameToken>
+	 *		&lt;Username>leGrand&lt;/UserName>
+	 *	&lt;/UsernameToken>
+	 *    &lt;/Security>
+	 *     
+	  Calling getValue("Security", "UsernameToken", "Username")
 	      
-	      Calling getValue("Security", "UsernameToken", "Username")
-	      
-	      Returns : leGrand
+	  Returns : leGrand
+	      </pre>
 	 * 
-	 * @param keys - path to child element node name
+	 * @param keys path to child element node name
 	 * @return xml element value
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })

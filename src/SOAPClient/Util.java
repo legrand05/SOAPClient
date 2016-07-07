@@ -1,4 +1,4 @@
-package ind.legrand.mondesir.SOAPClient;
+package SOAPClient;
 
 import java.io.File;
 import java.io.FileNotFoundException;
